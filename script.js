@@ -405,7 +405,53 @@
       ctx.fillStyle = i % 5 === 0 ? "#7f8fb8" : "#405178";
       ctx.fillRect(x, y, 1.9, 1.9);
     }
+
+    drawBackgroundPlanets();
     ctx.restore();
+  }
+
+  function drawBackgroundPlanets() {
+    const planets = [
+      { x: WORLD_WIDTH * 0.18, y: WORLD_HEIGHT * 0.2, radius: 54, base: "#354763" },
+      { x: WORLD_WIDTH * 0.82, y: WORLD_HEIGHT * 0.74, radius: 44, base: "#2f3d55" },
+    ];
+
+    for (const planet of planets) {
+      ctx.save();
+      ctx.translate(planet.x, planet.y);
+
+      ctx.fillStyle = planet.base;
+      ctx.beginPath();
+      ctx.arc(0, 0, planet.radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Geometrische Flächen für einen stilisierten Planeten-Look
+      ctx.globalAlpha = 0.45;
+      for (let i = 0; i < 8; i += 1) {
+        const a1 = (i / 8) * Math.PI * 2;
+        const a2 = ((i + 1) / 8) * Math.PI * 2;
+        const inner = planet.radius * 0.28;
+        const outer = planet.radius * (0.64 + (i % 3) * 0.08);
+
+        ctx.fillStyle = i % 2 === 0 ? "#4d6387" : "#253249";
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a1) * inner, Math.sin(a1) * inner);
+        ctx.lineTo(Math.cos(a1) * outer, Math.sin(a1) * outer);
+        ctx.lineTo(Math.cos(a2) * outer, Math.sin(a2) * outer);
+        ctx.lineTo(Math.cos(a2) * inner, Math.sin(a2) * inner);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      ctx.strokeStyle = "#7087ad";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(0, 0, planet.radius, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.restore();
+    }
   }
 
   function drawShip() {
