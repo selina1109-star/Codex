@@ -29,6 +29,7 @@ Dann im Browser öffnen: `http://localhost:8080`
 - **Pfeil links / rechts**: Schiff rotieren
 - **Pfeil hoch**: Schub
 - **Leertaste**: Schießen
+- **P**: Pause fortsetzen/aufheben
 - **R**: Neustart (nach Game Over)
 
 ## Gameplay-Features
@@ -42,6 +43,7 @@ Dann im Browser öffnen: `http://localhost:8080`
 - Schüsse zerstören Asteroiden
 - Score-System
 - 3 Leben + Game-Over-Overlay mit Restart
+- Pause-Funktion per Tastendruck (`P`)
 - Sauberes Reset des Spielzustands beim Neustart
 
 ## Projektstruktur

@@ -39,6 +39,7 @@
   let score;
   let lives;
   let gameOver;
+  let paused;
   let lastTime;
   let wave;
 
@@ -124,6 +125,7 @@
     score = 0;
     lives = INITIAL_LIVES;
     gameOver = false;
+    paused = false;
     wave = 1;
 
     spawnWave(4);
@@ -139,6 +141,10 @@
     if (event.code === "Space") {
       keys.shoot = true;
       event.preventDefault();
+    }
+    if (event.code === "KeyP" && !gameOver) {
+      paused = !paused;
+      setStatus(paused ? "Status: Pausiert (P zum Fortsetzen)" : "Status: Laufend");
     }
 
     if (event.code === "KeyR" && gameOver) {
@@ -170,6 +176,7 @@
       updateParticles(dt);
       return;
     }
+    if (paused) return;
 
     updateShip(dt);
     updateBullets(dt);
@@ -383,6 +390,7 @@
     drawParticles();
 
     if (gameOver) drawGameOverOverlay();
+    if (paused) drawPauseOverlay();
   }
 
   function drawStarfield() {
@@ -494,6 +502,22 @@
     ctx.font = "20px 'Courier New', monospace";
     ctx.fillText("Drücke R für Neustart", WORLD_WIDTH / 2, WORLD_HEIGHT / 2 + 20);
     ctx.fillText(`Final Score: ${score}`, WORLD_WIDTH / 2, WORLD_HEIGHT / 2 + 52);
+    ctx.restore();
+  }
+
+  function drawPauseOverlay() {
+    ctx.save();
+    ctx.fillStyle = "rgba(2, 4, 10, 0.5)";
+    ctx.fillRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#9cf9ea";
+    ctx.font = "bold 44px 'Courier New', monospace";
+    ctx.fillText("PAUSE", WORLD_WIDTH / 2, WORLD_HEIGHT / 2 - 10);
+
+    ctx.fillStyle = "#d7e2ff";
+    ctx.font = "18px 'Courier New', monospace";
+    ctx.fillText("Drücke P zum Fortsetzen", WORLD_WIDTH / 2, WORLD_HEIGHT / 2 + 24);
     ctx.restore();
   }
 
