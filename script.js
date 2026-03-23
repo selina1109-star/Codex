@@ -436,7 +436,7 @@
     }
 
     if (ship.muzzleFlashFor > 0) {
-      ctx.strokeStyle = "#9cf9ea";
+      ctx.strokeStyle = "#ff5a5a";
       ctx.beginPath();
       ctx.moveTo(SHIP_RADIUS, 0);
       ctx.lineTo(SHIP_RADIUS + 8, 0);
@@ -447,7 +447,7 @@
   }
 
   function drawBullets() {
-    ctx.fillStyle = "#9cf9ea";
+    ctx.fillStyle = "#ff5a5a";
     for (const b of bullets) {
       ctx.beginPath();
       ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
