@@ -475,7 +475,34 @@
       }
 
       ctx.closePath();
+      ctx.fillStyle = a.hitFlashFor > 0 ? "#b07a45" : "#6f4b2b";
+      ctx.fill();
       ctx.stroke();
+
+      // Geometrische Facetten für eine steinige Oberfläche
+      ctx.globalAlpha = 0.5;
+      for (let i = 0; i < a.shape.length; i += 3) {
+        const p1 = a.shape[i % a.shape.length];
+        const p2 = a.shape[(i + 1) % a.shape.length];
+        const p3 = a.shape[(i + 2) % a.shape.length];
+
+        const a1 = p1.t * Math.PI * 2;
+        const a2 = p2.t * Math.PI * 2;
+        const a3 = p3.t * Math.PI * 2;
+
+        const r1 = a.radius * p1.r * 0.7;
+        const r2 = a.radius * p2.r * 0.65;
+        const r3 = a.radius * p3.r * 0.72;
+
+        ctx.fillStyle = i % 2 === 0 ? "#8a6239" : "#5c3f24";
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a1) * r1, Math.sin(a1) * r1);
+        ctx.lineTo(Math.cos(a2) * r2, Math.sin(a2) * r2);
+        ctx.lineTo(Math.cos(a3) * r3, Math.sin(a3) * r3);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
       ctx.restore();
     }
   }
