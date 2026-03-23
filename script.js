@@ -403,7 +403,7 @@
       const x = (i * 137.5) % WORLD_WIDTH;
       const y = (i * 79.3 + 53) % WORLD_HEIGHT;
       ctx.fillStyle = i % 5 === 0 ? "#7f8fb8" : "#405178";
-      ctx.fillRect(x, y, 1.4, 1.4);
+      ctx.fillRect(x, y, 1.9, 1.9);
     }
     ctx.restore();
   }
