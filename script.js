@@ -412,28 +412,36 @@
 
   function drawBackgroundPlanets() {
     const planets = [
-      { x: WORLD_WIDTH * 0.18, y: WORLD_HEIGHT * 0.2, radius: 54, base: "#354763" },
-      { x: WORLD_WIDTH * 0.82, y: WORLD_HEIGHT * 0.74, radius: 44, base: "#2f3d55" },
+      { x: WORLD_WIDTH * 0.2, y: WORLD_HEIGHT * 0.22, radius: 72, base: "#4f6a92", glow: "#6e8fc7" },
+      { x: WORLD_WIDTH * 0.84, y: WORLD_HEIGHT * 0.18, radius: 58, base: "#41587d", glow: "#5f7fb2" },
     ];
 
     for (const planet of planets) {
       ctx.save();
       ctx.translate(planet.x, planet.y);
 
+      // Sichtbarer Halo, damit Planeten klar im Hintergrund auffallen
+      ctx.globalAlpha = 0.55;
+      ctx.fillStyle = planet.glow;
+      ctx.beginPath();
+      ctx.arc(0, 0, planet.radius * 1.35, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.globalAlpha = 0.95;
       ctx.fillStyle = planet.base;
       ctx.beginPath();
       ctx.arc(0, 0, planet.radius, 0, Math.PI * 2);
       ctx.fill();
 
       // Geometrische Flächen für einen stilisierten Planeten-Look
-      ctx.globalAlpha = 0.45;
+      ctx.globalAlpha = 0.72;
       for (let i = 0; i < 8; i += 1) {
         const a1 = (i / 8) * Math.PI * 2;
         const a2 = ((i + 1) / 8) * Math.PI * 2;
         const inner = planet.radius * 0.28;
         const outer = planet.radius * (0.64 + (i % 3) * 0.08);
 
-        ctx.fillStyle = i % 2 === 0 ? "#4d6387" : "#253249";
+        ctx.fillStyle = i % 2 === 0 ? "#7f9ece" : "#304463";
         ctx.beginPath();
         ctx.moveTo(Math.cos(a1) * inner, Math.sin(a1) * inner);
         ctx.lineTo(Math.cos(a1) * outer, Math.sin(a1) * outer);
@@ -444,11 +452,20 @@
       }
       ctx.globalAlpha = 1;
 
-      ctx.strokeStyle = "#7087ad";
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = "#a8c0ea";
+      ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(0, 0, planet.radius, 0, Math.PI * 2);
       ctx.stroke();
+
+      // Einfache Orbit-Ringe als zusätzliche geometrische Formen
+      ctx.strokeStyle = "#8eaadb";
+      ctx.globalAlpha = 0.75;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, planet.radius * 1.25, planet.radius * 0.45, Math.PI / 7, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
 
       ctx.restore();
     }
