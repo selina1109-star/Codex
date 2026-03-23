@@ -403,7 +403,7 @@
       const x = (i * 137.5) % WORLD_WIDTH;
       const y = (i * 79.3 + 53) % WORLD_HEIGHT;
       ctx.fillStyle = i % 5 === 0 ? "#7f8fb8" : "#405178";
-      ctx.fillRect(x, y, 1.4, 1.4);
+      ctx.fillRect(x, y, 1.9, 1.9);
     }
     ctx.restore();
   }
@@ -436,7 +436,7 @@
     }
 
     if (ship.muzzleFlashFor > 0) {
-      ctx.strokeStyle = "#9cf9ea";
+      ctx.strokeStyle = "#ff5a5a";
       ctx.beginPath();
       ctx.moveTo(SHIP_RADIUS, 0);
       ctx.lineTo(SHIP_RADIUS + 8, 0);
@@ -447,7 +447,7 @@
   }
 
   function drawBullets() {
-    ctx.fillStyle = "#9cf9ea";
+    ctx.fillStyle = "#ff5a5a";
     for (const b of bullets) {
       ctx.beginPath();
       ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
@@ -475,7 +475,34 @@
       }
 
       ctx.closePath();
+      ctx.fillStyle = a.hitFlashFor > 0 ? "#9da3ad" : "#5f6673";
+      ctx.fill();
       ctx.stroke();
+
+      // Geometrische Facetten für eine steinige Oberfläche
+      ctx.globalAlpha = 0.5;
+      for (let i = 0; i < a.shape.length; i += 3) {
+        const p1 = a.shape[i % a.shape.length];
+        const p2 = a.shape[(i + 1) % a.shape.length];
+        const p3 = a.shape[(i + 2) % a.shape.length];
+
+        const a1 = p1.t * Math.PI * 2;
+        const a2 = p2.t * Math.PI * 2;
+        const a3 = p3.t * Math.PI * 2;
+
+        const r1 = a.radius * p1.r * 0.7;
+        const r2 = a.radius * p2.r * 0.65;
+        const r3 = a.radius * p3.r * 0.72;
+
+        ctx.fillStyle = i % 2 === 0 ? "#818999" : "#4f5561";
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a1) * r1, Math.sin(a1) * r1);
+        ctx.lineTo(Math.cos(a2) * r2, Math.sin(a2) * r2);
+        ctx.lineTo(Math.cos(a3) * r3, Math.sin(a3) * r3);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
       ctx.restore();
     }
   }
