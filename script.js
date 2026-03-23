@@ -475,7 +475,7 @@
       }
 
       ctx.closePath();
-      ctx.fillStyle = a.hitFlashFor > 0 ? "#b07a45" : "#6f4b2b";
+      ctx.fillStyle = a.hitFlashFor > 0 ? "#9da3ad" : "#5f6673";
       ctx.fill();
       ctx.stroke();
 
@@ -494,7 +494,7 @@
         const r2 = a.radius * p2.r * 0.65;
         const r3 = a.radius * p3.r * 0.72;
 
-        ctx.fillStyle = i % 2 === 0 ? "#8a6239" : "#5c3f24";
+        ctx.fillStyle = i % 2 === 0 ? "#818999" : "#4f5561";
         ctx.beginPath();
         ctx.moveTo(Math.cos(a1) * r1, Math.sin(a1) * r1);
         ctx.lineTo(Math.cos(a2) * r2, Math.sin(a2) * r2);
